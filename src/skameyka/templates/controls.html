@@ -1,0 +1,32 @@
+{% macro TreeViewControl(control) %}
+<div name="{{ control.name }}">
+</div>
+<script>
+	$.jstree._themes = '/static/themes/'
+	$('div[name="{{ control.name }}"]').jstree({
+		"json_data": {
+			"ajax": {
+				"url": "/taburet{{ control.datasource.endpoint }}",
+				"data": function(n) {
+					console.log(n)
+					if ( n.attr ) {
+						return {'root': n.attr("node_id")}
+					}
+				},
+				"success": function(data) {
+					result=[]
+					for(i in data) {
+						result[i] = {
+							'data':data[i].name,
+							'state':'closed',
+							'attr': {'node_id': data[i].id},
+						}
+					}
+					return result
+				}
+			}
+		},
+		"plugins" : [ "themes", "json_data" ]
+	})
+</script>	
+{% endmacro %}

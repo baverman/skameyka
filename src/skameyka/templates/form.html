@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% import "controls.html" as controls %}
+
+{% block body %}
+	<form>
+		{{ controls.TreeViewControl(form.controls[0]) }}
+	</form>
+{% endblock %}
